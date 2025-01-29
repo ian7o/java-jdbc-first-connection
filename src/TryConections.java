@@ -4,12 +4,12 @@ import java.sql.SQLException;
 
 public class TryConections {
 
-    public Connection getConnection() {
-        String dbURL = "jdbc:mysql://localhost:3306/rentACarDB";
+    public static Connection getConnection() {
+        String dbURL = "jdbc:mysql://127.0.0.1:3306/rentACarDB";
         String username = "root";
-        String password = "";
+        String password = "dsds";
 
-            Connection theConnection = null;
+        Connection theConnection = null;
 
         try {
             theConnection = DriverManager.getConnection(dbURL, username, password);
@@ -17,6 +17,6 @@ public class TryConections {
             System.out.println("error: " + e.getMessage());
         }
 
-            return theConnection;
+        return theConnection;
     }
 }

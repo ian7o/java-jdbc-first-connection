@@ -1,9 +1,6 @@
-import java.sql.SQLException;
-
 public class Main {
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        TryConections tryConections = new TryConections();
-        tryConections.getConnection();
-
+    public static void main(String[] args) {
+        SelectQuery selectQuery = new SelectQuery();
+        selectQuery.selectQueryTest();
     }
 }
