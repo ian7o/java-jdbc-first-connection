@@ -1,37 +1,45 @@
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
+import java.util.List;
 
 public class SelectQuery {
 
-    public void selectQueryTest() {
+    public List<Car> selectQueryTest() {
         TryConections tryConections = new TryConections();
+        List<Car> carArrayList = new ArrayList<>();
         try (Connection conn = tryConections.getConnection();
              //fechando os dois direto
-             Statement statement = conn.createStatement()) {
+             Statement statement = conn.createStatement())
+        {
+            String query = "SELECT * FROM car";
+            ResultSet resultSet = statement.executeQuery(query);
 
-                String query = "SELECT * FROM car";
-                ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                int carID = resultSet.getInt("carID");
+                String brand = resultSet.getString("brand");
+                String model = resultSet.getString("model");
+                String color = resultSet.getString("color");
+                int priceForHour = resultSet.getInt("priceForHour");
+                int manufactureYear = resultSet.getInt("manufactureYear");
+                int plate = resultSet.getInt("plate");
 
-                while (resultSet.next()) {
-                    int carID = resultSet.getInt("carID");
-                    String brand = resultSet.getString("brand"), model = resultSet.getString("model"), color = resultSet.getString("color"), priceForHour, manufactureYear, plate;
-                    System.out.println("carID: " + carID + " brand: " + brand + "model: " + model + " color: " + color);
-                }
+                carArrayList.add(new Car(carID,
+                        brand,
+                        model,
+                        color,
+                        priceForHour,
+                        manufactureYear,
+                        plate));
+            }
+            carArrayList.forEach(i -> System.out.println(i));
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("selection error: " + e.getMessage());
         }
+        return carArrayList;
     }
-
-//    //ta aqui para eu usar separado depois se precisar mas nesse caso o proprio try ja fecha então nao preciso é para o futuro
-//    public Connection closeConn(Connection especify) {
-//        try {
-//            especify.close();
-//
-//        } catch (SQLException e) {
-//            System.out.println("close error: " + e.getMessage());
-//        }
-//        return especify;
-//    }
 }
